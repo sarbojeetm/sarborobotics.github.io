@@ -1,0 +1,32 @@
+#include <ESP8266WiFi.h>
+#include <ArduinoOTA.h>
+
+const char* ssid = "your-SSID";       // Replace with your Wi-Fi SSID
+const char* password = "your-PASSWORD"; // Replace with your Wi-Fi password
+
+void setup() {
+  // Start Serial for debugging
+  Serial.begin(115200);
+  delay(10);
+
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
+  
+  // Wait until connected to Wi-Fi
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+  Serial.println("Connected to Wi-Fi!");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());  // Print the ESP's IP address
+  
+  // Start OTA
+  ArduinoOTA.begin();
+}
+
+void loop() {
+  // Handle OTA requests
+  ArduinoOTA.handle();
+}
